@@ -1,0 +1,21 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+**/build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.kotlin/
+
+# AI tooling
+.claude/
+.cursor/
+.aider*
+.continue/
+*.prompt.md
+CLAUDE.md
+.github/copilot-instructions.md

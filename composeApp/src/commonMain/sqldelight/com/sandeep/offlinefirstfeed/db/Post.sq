@@ -1,0 +1,41 @@
+CREATE TABLE Post (
+    id TEXT NOT NULL PRIMARY KEY,
+    authorId TEXT NOT NULL,
+    text TEXT NOT NULL,
+    imageUrl TEXT,
+    likeCount INTEGER NOT NULL DEFAULT 0,
+    likedByMe INTEGER NOT NULL DEFAULT 0,
+    createdAt INTEGER NOT NULL,
+    updatedAt INTEGER NOT NULL,
+    syncStatus TEXT NOT NULL DEFAULT 'SYNCED',
+    FOREIGN KEY (authorId) REFERENCES User(id)
+);
+
+CREATE INDEX Post_createdAt_idx ON Post(createdAt DESC);
+CREATE INDEX Post_authorId_idx ON Post(authorId);
+
+insertOrReplace:
+INSERT OR REPLACE INTO Post(id, authorId, text, imageUrl, likeCount, likedByMe, createdAt, updatedAt, syncStatus)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectPaged:
+SELECT Post.*, User.displayName AS authorDisplayName, User.avatarUrl AS authorAvatarUrl
+FROM Post
+INNER JOIN User ON Post.authorId = User.id
+ORDER BY Post.createdAt DESC
+LIMIT :limit OFFSET :offset;
+
+selectById:
+SELECT Post.*, User.displayName AS authorDisplayName, User.avatarUrl AS authorAvatarUrl
+FROM Post
+INNER JOIN User ON Post.authorId = User.id
+WHERE Post.id = :id;
+
+updateSyncStatus:
+UPDATE Post SET syncStatus = :syncStatus, updatedAt = :updatedAt WHERE id = :id;
+
+deleteAll:
+DELETE FROM Post;
+
+count:
+SELECT COUNT(*) FROM Post;

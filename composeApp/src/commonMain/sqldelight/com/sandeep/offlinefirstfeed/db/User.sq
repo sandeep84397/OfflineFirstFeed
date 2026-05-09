@@ -1,0 +1,18 @@
+CREATE TABLE User (
+    id TEXT NOT NULL PRIMARY KEY,
+    displayName TEXT NOT NULL,
+    avatarUrl TEXT
+);
+
+insertOrReplace:
+INSERT OR REPLACE INTO User(id, displayName, avatarUrl)
+VALUES (?, ?, ?);
+
+selectAll:
+SELECT * FROM User;
+
+selectById:
+SELECT * FROM User WHERE id = ?;
+
+deleteAll:
+DELETE FROM User;

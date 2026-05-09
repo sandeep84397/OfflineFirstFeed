@@ -1,0 +1,19 @@
+CREATE TABLE RemoteKey (
+    id TEXT NOT NULL PRIMARY KEY,
+    nextOffset INTEGER,
+    prevOffset INTEGER,
+    fetchedAt INTEGER NOT NULL
+);
+
+insertOrReplace:
+INSERT OR REPLACE INTO RemoteKey(id, nextOffset, prevOffset, fetchedAt)
+VALUES (?, ?, ?, ?);
+
+selectById:
+SELECT * FROM RemoteKey WHERE id = ?;
+
+deleteById:
+DELETE FROM RemoteKey WHERE id = ?;
+
+deleteAll:
+DELETE FROM RemoteKey;
